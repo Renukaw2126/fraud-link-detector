@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SafeLinker - Fraud Link Detector</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar {
+            background-color: #3234aa;
+        }
+
+        .navbar a {
+            color: white !important;
+            font-weight: 500;
+        }
+
+        .hero {
+            background: linear-gradient(to right, #3234aa, #0d6efd);
+            color: white;
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .section-divider {
+            border: none;
+            height: 2px;
+            background-color: black;
+            margin: 40px 0;
+        }
+
+        /* FAQ Accordion */
+        .accordion-button::after {
+            display: none !important;
+        }
+
+        .toggle-icon {
+            font-size: 1.2rem;
+        }
+
+        .accordion-button .bi-dash-lg {
+            display: none;
+        }
+
+        .accordion-button[aria-expanded="true"] .bi-plus-lg {
+            display: none;
+        }
+
+        .accordion-button[aria-expanded="true"] .bi-dash-lg {
+            display: inline-block;
+        }
+
+        .accordion-item {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+               <img src="{{ url_for('static', filename='safelinker-logo-v7 (2).svg') }}" 
+     height="50" alt="SafeLinker" class="ms-0 ps-0">
+                    
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#how-it-works"><i class="bi bi-lightbulb-fill me-1"></i> How It
+                            Works</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#faq"><i class="bi bi-patch-question-fill me-1"></i> FAQ</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <i class="bi bi-person-circle me-1"></i> About
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <style>
+    .input-group .form-control {
+    border-radius: 50px 0 0 50px !important;
+    padding: 12px 20px;
+}
+
+.input-group .btn {
+    border-radius: 0 50px 50px 0 !important;
+}
+.alert-success {
+    background-color: #198754 !important;
+    color: white !important;
+    border: none !important;
+}
+
+.alert-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: none !important;
+}
+</style>
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Fraud Link Detection System</h1>
+        <p>Check if a URL is safe or phishing using Machine Learning</p>
+
+        <p class="mt-2" style="font-size: 1rem; opacity: 0.85;">
+            Trained on <strong>11,430 real-world URLs</strong> with <strong>87 handpicked features</strong> —
+            built to catch phishing links before they catch you.
+        </p>
+        <span class="badge rounded-pill text-bg-success fs-6 me-3">✅ 97% Accurate Model </span>
+        <span class="badge rounded-pill text-bg-primary fs-6 me-3">🔗 87 Features Analyzed</span>
+        <span class="badge rounded-pill text-bg-warning fs-6 me-3">🛡️ 11,430 URLs Trained</span>
+        <form method="POST" action="/predict" class="mt-4">
+            <div class="input-group w-75 mx-auto">
+                <input type="text" name="url" class="form-control" placeholder="Enter URL here..." required>
+                <button class="btn btn-success px-4 fw-bold">Check</button>
+            </div>
+        </form>
+        <style>
+            .btn-check-custom {
+                background-color: #28a745;
+                color: white;
+                border: none;
+                padding: 10px 28px;
+                font-weight: 600;
+                border-radius: 0 50px 50px 0;
+                transition: background 0.3s;
+            }
+
+            .btn-check-custom:hover {
+                background-color: #218838;
+                color: white;
+            }
+        </style>
+        {% if result %}
+        <div class="alert mt-4 w-50 mx-auto 
+        {% if 'SAFE' in result %}alert-success{% else %}alert-danger{% endif %}">
+            {{ result }}
+        </div>
+        {% endif %}
+    </section>
+    <style>
+    .alert-danger {
+    background-color: #dc3545 !important;
+    color: white !important;
+    border: none !important;
+}
+
+</style>
+    <hr class="section-divider">
+
+    <!-- How It Works Section -->
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="container my-5 py-4">
+        <h2 class="text-center mb-2" style="color: #3234aa; font-weight: 700;">How SafeLinker Works</h2>
+        <p class="text-center text-muted mb-5">Simple 3 step process to check any URL</p>
+
+        <div class="row align-items-center g-4">
+
+            <!-- Step 1 -->
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon"><i class="bi bi-link-45deg"></i></div>
+                    <h5>Enter URL</h5>
+                    <p>Paste any suspicious link you want to verify into the input box.</p>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div class="col-md-1 d-none d-md-flex arrow">
+                <i class="bi bi-arrow-right"></i>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon"><i class="bi bi-cpu"></i></div>
+                    <h5>Feature Extraction</h5>
+                    <p>System extracts 87 URL features and analyzes patterns automatically.</p>
+                </div>
+            </div>
+
+            <!-- Arrow -->
+            <div class="col-md-1 d-none d-md-flex arrow">
+                <i class="bi bi-arrow-right"></i>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon"><i class="bi bi-shield-check"></i></div>
+                    <h5>ML Prediction</h5>
+                    <p>Our XGBoost model predicts instantly if the link is safe or phishing.</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <style>
+        .step-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px 25px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(50, 52, 170, 0.1);
+            border-bottom: 4px solid #3234aa;
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+        }
+
+        .step-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 30px rgba(50, 52, 170, 0.2);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(to right, #3234aa, #0d6efd);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 0 auto 15px auto;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            color: #0d6efd;
+            margin-bottom: 15px;
+        }
+
+        .step-card h5 {
+            font-weight: 700;
+            color: #3234aa;
+            margin-bottom: 10px;
+        }
+
+        .step-card p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .arrow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #3234aa;
+            font-size: 1.8rem;
+            opacity: 0.4;
+        }
+    </style>
+
+
+    <hr class="section-divider">
+
+    <!-- FAQ Section -->
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <div class="faq-badge">FAQ</div>
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <p class="faq-subtitle">Everything you need to know about SafeLinker</p>
+            </div>
+
+            <div class="col-md-8 mx-auto">
+
+                <div class="faq-item">
+                    <button class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false">
+                        What is SafeLinker?
+                        <span class="icon"><i class="bi bi-plus-lg"></i></span>
+                    </button>
+                    <div id="faq1" class="collapse">
+                        <div class="faq-answer">
+                            SafeLinker is a web application that detects whether a URL is safe or fraudulent using
+                            Machine Learning.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false">
+                        How does it work?
+                        <span class="icon"><i class="bi bi-plus-lg"></i></span>
+                    </button>
+                    <div id="faq2" class="collapse">
+                        <div class="faq-answer">
+                            The system extracts URL-based features and passes them to a trained XGBoost model which
+                            predicts whether the link is legitimate or phishing.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false">
+                        Is it free to use?
+                        <span class="icon"><i class="bi bi-plus-lg"></i></span>
+                    </button>
+                    <div id="faq3" class="collapse">
+                        <div class="faq-answer">
+                            Yes! SafeLinker is completely free to use.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false">
+                        How accurate is the model?
+                        <span class="icon"><i class="bi bi-plus-lg"></i></span>
+                    </button>
+                    <div id="faq4" class="collapse">
+                        <div class="faq-answer">
+                            Our XGBoost model is trained on 11,430 real-world URLs with 87 features and achieves 97%
+                            accuracy.
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <style>
+        .faq-section {
+            background: #f0f4ff;
+            padding: 60px 20px;
+        }
+
+        .faq-title {
+            color: #3234aa;
+            font-weight: 800;
+            font-size: 2rem;
+        }
+
+        .faq-subtitle {
+            color: #888;
+            font-size: 0.95rem;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            box-shadow: 0 2px 12px rgba(50, 52, 170, 0.08);
+            border: 1px solid rgba(50, 52, 170, 0.1);
+            overflow: hidden;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 20px rgba(50, 52, 170, 0.15);
+        }
+
+        .faq-question {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 20px 24px;
+            text-align: left;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #3234aa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .faq-question:hover {
+            background: #f0f4ff;
+        }
+
+        .faq-question .icon {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(to right, #3234aa, #0d6efd);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .faq-question[aria-expanded="true"] .icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            padding: 5px 24px 20px 24px;
+            color: #555;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 15px;
+        }
+
+        .faq-badge {
+            background: linear-gradient(to right, #3234aa, #0d6efd);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+
+    <style>
+        .navbar .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .navbar .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+
+        .navbar .nav-link:hover::after {
+            width: 100%;
+        }
+    </style>
+    <hr class="section-divider">
+
+    <!-- About Section -->
+    <section class="about-section" id="about">
+        <div class="container">
+            <h2 class="text-center mb-4" style="color: #3234aa; font-weight: 700;">
+                <i class="bi bi-person-circle me-2"></i>About The Project
+            </h2>
+            <div class="col-md-8 mx-auto">
+                <div class="about-card">
+                    <h3>SafeLinker 🛡️</h3>
+                    <p>SafeLinker is a Machine Learning powered web application designed to detect phishing and
+                        fraudulent URLs in real time. Built using Python, Flask and XGBoost, it analyzes 87 URL-based
+                        features to predict whether a link is safe or malicious.</p>
+                    <p>This project was built to raise awareness about online phishing attacks and provide a simple tool
+                        for everyday users to verify suspicious links before clicking them.</p>
+                    <p class="mb-0"><strong>Built by:</strong> Renuka Wagh</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr class="section-divider">
+
+    <!-- Technologies Used -->
+    <section class="tech-section" id="technologies">
+        <div class="container">
+            <h2 class="text-center mb-2" style="color: #3234aa; font-weight: 700;">
+                <i class="bi bi-tools me-2"></i>Technologies Used
+            </h2>
+            <p class="text-center text-muted mb-4">Built with modern tools and frameworks</p>
+            <div class="text-center">
+                <span class="tech-badge"><i class="bi bi-filetype-py"></i> Python</span>
+                <span class="tech-badge"><i class="bi bi-bar-chart-fill"></i> XGBoost</span>
+                <span class="tech-badge"><i class="bi bi-server"></i> Flask</span>
+                <span class="tech-badge"><i class="bi bi-bootstrap-fill"></i> Bootstrap</span>
+                <span class="tech-badge"><i class="bi bi-table"></i> Pandas</span>
+                <span class="tech-badge"><i class="bi bi-graph-up"></i> Scikit-learn</span>
+                <span class="tech-badge"><i class="bi bi-filetype-html"></i> HTML & CSS</span>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container text-center">
+
+            <div class="disclaimer col-md-8 mx-auto">
+                ⚠️ <strong>Disclaimer:</strong> SafeLinker is built for educational purposes only.
+                Results may not be 100% accurate. Always use caution when visiting unknown links.
+            </div>
+
+            <hr class="footer-divider">
+
+            <p class="mb-0" style="font-size: 0.85rem; opacity: 0.7;">
+                © 2025 SafeLinker | Built by Renuka Wagh | Fraud Link Detection System
+            </p>
+
+        </div>
+    </footer>
+    <style>
+        .about-section {
+            padding: 60px 20px;
+            background: white;
+        }
+
+        .about-card {
+            background: #f0f4ff;
+            border-radius: 12px;
+            padding: 30px;
+            border-left: 5px solid #3234aa;
+        }
+
+        .about-card h3 {
+            color: #3234aa;
+            font-weight: 700;
+        }
+
+        .about-card p {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .tech-section {
+            padding: 60px 20px;
+            background: #f8f9fa;
+        }
+
+        .tech-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: white;
+            border: 1px solid rgba(50, 52, 170, 0.2);
+            border-radius: 50px;
+            padding: 8px 20px;
+            margin: 6px;
+            font-weight: 600;
+            color: #3234aa;
+            font-size: 0.9rem;
+        }
+
+        .disclaimer {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            background: #1a1c6e;
+            color: white;
+            padding: 40px 20px 20px 20px;
+        }
+
+        .footer-divider {
+            border-color: rgba(255, 255, 255, 0.2);
+            margin: 20px 0;
+        }
+    </style>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>
