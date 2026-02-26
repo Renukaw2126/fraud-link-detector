@@ -3,7 +3,7 @@
 Ever received a suspicious link and wondered — *is this safe to click?*  
 SafeLinker was built to answer exactly that question.
 
-## 🚀 Live Demo
+## 🚀Live Demo
 👉 Try SafeLinker here -(https://renukawagh-safelinker.hf.space)
 
 ##  What is SafeLinker?
@@ -13,7 +13,7 @@ whether it's **safe or a phishing attempt** — in seconds.
 It looks at 87 different URL characteristics and uses a trained XGBoost model to make 
 that decision with **97% accuracy**.
 
-## 🛠️ Built With
+##  Built With
 - **Python** — core language
 - **XGBoost** — ML model (97% accuracy)
 - **Flask** — web framework
