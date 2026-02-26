@@ -4,9 +4,9 @@ Ever received a suspicious link and wondered — *is this safe to click?*
 SafeLinker was built to answer exactly that question.
 
 ## 🚀 Live Demo
-👉 [Try SafeLinker here](https://renukawagh-safelinker.hf.space)
+👉 Try SafeLinker here -(https://renukawagh-safelinker.hf.space)
 
-## 💡 What is SafeLinker?
+##  What is SafeLinker?
 SafeLinker is a Machine Learning powered web app that analyzes a URL and tells you 
 whether it's **safe or a phishing attempt** — in seconds.
 
@@ -25,7 +25,7 @@ that decision with **97% accuracy**.
 - **87 URL-based features** analyzed
 - Perfectly balanced dataset — 50% legitimate, 50% phishing
 
-## ⚙️ Run it Locally
+##  Run it Locally
 ```bash
 pip install -r requirements.txt
 python server/app.py
