@@ -27,7 +27,7 @@ Phishing attacks commonly use malicious URLs to steal sensitive information. Saf
 
 ---
 
-## 🛠 Technologies Used
+## Technologies Used
 
 - Python
 - Flask
