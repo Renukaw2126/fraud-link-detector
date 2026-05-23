@@ -1,37 +1,138 @@
-# 🛡️ SafeLinker - Fraud Link Detector
+# 🛡️ SafeLinker – Fraud Link Detector
 
-Ever received a suspicious link and wondered — *is this safe to click?*  
-SafeLinker was built to answer exactly that question.
+SafeLinker is a Machine Learning based phishing URL detection system that analyzes suspicious links and predicts whether they are **legitimate** or **fraudulent**.
 
-## 🚀Live Demo
-👉 Try SafeLinker here -(https://renukawagh-safelinker.hf.space)
+The application extracts URL characteristics, processes them using an ML pipeline, and provides instant prediction results through a web interface.
 
-##  What is SafeLinker?
-SafeLinker is a Machine Learning powered web app that analyzes a URL and tells you 
-whether it's **safe or a phishing attempt** — in seconds.
+---
 
-It looks at 87 different URL characteristics and uses a trained XGBoost model to make 
-that decision with **97% accuracy**.
+##  Live Demo
 
-##  Built With
-- **Python** — core language
-- **XGBoost** — ML model (97% accuracy)
-- **Flask** — web framework
-- **Bootstrap** — frontend UI
-- **Pandas & Scikit-learn** — data processing
+ https://renukawagh-safelinker.hf.space
 
-## 📊 Behind the Model
-- Trained on **11,430 real-world URLs**
-- **87 URL-based features** analyzed
-- Perfectly balanced dataset — 50% legitimate, 50% phishing
+---
 
-##  Run it Locally
+##  Project Overview
+
+Phishing attacks commonly use malicious URLs to steal sensitive information. SafeLinker helps identify such URLs by analyzing multiple URL characteristics and using a trained Machine Learning model for prediction.
+
+### Key Features
+
+✔ Detects phishing and malicious URLs  
+✔ Real-time prediction system  
+✔ Feature extraction from URLs  
+✔ Machine Learning based classification  
+✔ User-friendly web interface  
+✔ Fast prediction response
+
+---
+
+## 🛠 Technologies Used
+
+- Python
+- Flask
+- XGBoost
+- Pandas
+- NumPy
+- Scikit-learn
+- Bootstrap
+
+---
+
+## 📊 Model Information
+
+- Dataset Size: **11,430 URLs**
+- Features Extracted: **87 URL features**
+- Dataset Distribution:
+  - 50% Legitimate URLs
+  - 50% Phishing URLs
+- Model Used: **XGBoost Classifier**
+- Accuracy Achieved: **97%**
+
+---
+
+## 📂 Project Structure
+
+```bash
+fraud-link-detector/
+│── app/
+│── model/
+│── static/
+│── templates/
+│── feature_extraction.py
+│── app.py
+│── requirements.txt
+│── README.md
+```
+
+---
+
+## ⚙ Installation
+
+Clone repository:
+
+```bash
+git clone https://github.com/Renukaw2126/fraud-link-detector.git
+```
+
+Move into project:
+
+```bash
+cd fraud-link-detector
+```
+
+Install dependencies:
+
 ```bash
 pip install -r requirements.txt
+```
+
+Run application:
+
+```bash
 python server/app.py
 ```
-Then open `http://localhost:8000` in your browser.
 
-## ⚠️ Disclaimer
-This project was built for educational purposes.  
-Always use caution when visiting unknown links.
+Open browser:
+
+```text
+http://localhost:8000
+```
+
+---
+
+## Working Process
+
+1. User enters URL  
+2. System extracts URL features  
+3. Features are processed by XGBoost model  
+4. Prediction generated  
+5. Result displayed as Safe / Fraudulent
+
+---
+
+## Future Improvements
+
+- Browser extension support
+- API integration
+- Threat scoring system
+- URL history tracking
+- Real-time blacklist integration
+
+---
+
+## Author
+
+**Renuka Wagh**
+
+GitHub: https://github.com/Renukaw2126
+
+Project developed for educational and portfolio purposes.
+
+---
+
+##  Disclaimer
+
+This application provides predictive analysis only and does not guarantee complete cybersecurity protection.
+
+Always verify suspicious links manually before opening them.
